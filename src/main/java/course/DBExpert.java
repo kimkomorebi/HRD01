@@ -11,7 +11,118 @@ import model.Courses;
 public class DBExpert {
 	final String driver = "oracle.jdbc.OracleDriver";
 	final String  url = "jdbc:oracle:thin:@localhost:1521/xe";
+	//Connection con = null;;
+	//PreparedStatement pstmt = null;
 	
+	public Courses getCourse(String id) {
+		String select = "select c.id, c.name, l.name, c.credit, c.week, "
+				+ "c.start_hour, c.end_end"
+				+ " from course_tbl c, lecturer_tbl l"
+				+ " where c.lecturer = l.idx"
+				+ " and c.id = ?";
+		Courses c = null;//조회 결과를 저장할 변수 선언
+		Connection con = null; PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt = con.prepareStatement(select);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {//조회 결과로 이동
+				c = new Courses(); //조회 결과를 저장할 DTO
+				c.setId(rs.getString(1));//과목 코드 설정
+				c.setC_name(rs.getString(2));//과목 이름
+				c.setL_name(rs.getString(3));//강사 이름
+				c.setCredit(rs.getInt(4));//학점
+				c.setDay(rs.getInt(5));//요일
+				c.setStart_hour(rs.getInt(6));//시작 시간(숫자)
+				c.setEnd_hour(rs.getInt(7));//종료 시간(숫자)
+			}
+		}catch(Exception e) {
+			
+		}finally {
+			try {
+				
+			}catch(Exception e) {}
+		}
+		return c;
+	}
+	
+	public boolean deleteCourse(String id) {
+		String delete = "delete from course_tbl where "
+		+ "id = ?";
+		boolean result = false; // 삭제 성공 유무를 위한 변수 선언
+		Connection con = null; PreparedStatement pstmt = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt = con.prepareStatement(delete);
+			pstmt.setString(1, id);//첫 번째 물음표 코드 설정
+			pstmt.executeUpdate();
+			con.commit();//commit 실행
+			result = true;//삭제 성공
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close(); con.close();
+			}catch(Exception e) {}
+		}
+		return result;
+	}
+	
+	public boolean putCourse(Courses c) {
+		String insert = "insert into course_tbl values("
+		+"?,?,?,?,?,?,?)";
+		boolean flag = false; // 삽인 결과를 저장할 변수 선언
+		Connection con = null; PreparedStatement pstmt = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt = con.prepareStatement(insert);
+			pstmt.setString(1, c.getId());//과목 코드
+			pstmt.setString(2, c.getC_name());//과목명
+			pstmt.setInt(3, c.getCredit());//학점
+			pstmt.setString(4, c.getL_code());//교수코드
+			pstmt.setInt(5, c.getDay());//요일
+			pstmt.setInt(6, c.getStart_hour());//시작 시간
+			pstmt.setInt(7, c.getEnd_hour());//종료 시간
+			pstmt.executeUpdate(); //insert
+			con.commit();//commit 실행
+			flag = true; // 삽입 성공
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close(); con.close();
+			}catch(Exception e) {}
+		}
+		return flag;
+	}
+	
+	public int getLecturerCode(String name) {
+		String select = "select idx from lecturer_tbl where "+
+		"name = ?";
+		int idx = -1;
+		Connection con = null; PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt = con.prepareStatement(select);
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			if(rs.next()) idx = rs.getInt(1);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close(); pstmt.close(); con.close();
+			}catch(Exception e) {}
+		}
+		return idx;
+	}
 	
 	public ArrayList<String> getLecturerName() {
 		String select = "select name from lecturer_tbl";

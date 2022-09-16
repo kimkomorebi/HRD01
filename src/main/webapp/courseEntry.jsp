@@ -16,7 +16,7 @@
 		<%
 			ArrayList<String> names = (ArrayList<String>)request.getAttribute("NAMES");
 		%>
-	<form action="">
+	<form action="courseEntry.do" method="post">
 		<table border="1" align="center">
 			<tr>
 				<th>교과목 코드</th>
@@ -47,7 +47,7 @@
 			<tr>
 				<th>학점</th>
 				<td>
-					<input type="text" name=""/>
+					<input type="text" name="CREDIT"/>
 				</td>
 			</tr>
 			<tr>
@@ -83,7 +83,7 @@
 	</form>
 	</section>
 	<footer>
-		<h3 align="center">Copyright 2018 청보처리산업기사 All Right Reserved</h3>
+		<h3 align="center">Copyright 2018 정보처리산업기사 All Right Reserved</h3>
 	</footer>
 </body>
 </html>

@@ -16,7 +16,7 @@
 		</form>
 	</section>
 	<footer>
-		<h3 align="center">Copyright 2018 청보처리산업기사 All Right Reserved</h3>
+		<h3 align="center">Copyright 2018 정보처리산업기사 All Right Reserved</h3>
 	</footer>
 </body>
 </html>

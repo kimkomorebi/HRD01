@@ -32,19 +32,22 @@
 <%
 	for(Courses c :clist){
 %>
-	<tr>
-		<td><%= c.getId() %></td>
-		<td><%= c.getC_name() %></td>
-		<td><%= c.getCredit() %></td>
-		<td><%= c.getL_name() %></td>
-		<td><%= c.getWeek() %></td>
-		<td><%= c.getStart() %></td>
-		<td><%= c.getEnd() %></td>
-		<td>
-			<input type="submit" value="수정"/>
-			<input type="submit" value="삭제"/>
-		</td>
-	</tr>
+	<form action="courseUpdate.do" method="post">
+		<input type="hidden" value="<%= c.getId() %>" name="ID"/>
+		<tr>
+			<td><%= c.getId() %></td>
+			<td><%= c.getC_name() %></td>
+			<td><%= c.getCredit() %></td>
+			<td><%= c.getL_name() %></td>
+			<td><%= c.getWeek() %></td>
+			<td><%= c.getStart() %></td>
+			<td><%= c.getEnd() %></td>
+			<td>
+				<input type="submit" value="수정" name="BTN"/>
+				<input type="submit" value="삭제" name="BTN"/>
+			</td>
+		</tr>
+	</form>
 <%
 	}
 %>
@@ -58,7 +61,7 @@
 	</table>
 </section>
 <footer>
-	<h3 align="center">Copyright 2018 청보처리산업기사 All Right Reserved</h3>
+	<h3 align="center">Copyright 2018 정보처리산업기사 All Right Reserved</h3>
 </footer>
 </body>
 </html>
