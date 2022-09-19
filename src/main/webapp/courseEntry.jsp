@@ -75,11 +75,16 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<input type="button" value="목록"/>
+					<input type="button" value="목록" onClick="courseList()"/>
 					<input type="submit" value="완료"/>
 				</td>
 			</tr>
 		</table>
+		<script type="text/javascript">
+			function courseList(){
+				location.href="courseList.do";
+			}
+		</script>
 	</form>
 	</section>
 	<footer>

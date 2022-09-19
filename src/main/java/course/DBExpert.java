@@ -14,6 +14,37 @@ public class DBExpert {
 	//Connection con = null;;
 	//PreparedStatement pstmt = null;
 	
+	
+	public boolean courseUpdate(Courses c) {
+		String update = "update course_tbl set name=?, credit=?,"
+		+" lecturer=?, week=?, start_hour=?, end_end=?"
+		+" where id =?";
+		boolean flag = false;//변경 성공 유무를 위한 변수 선언
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url,"hr","hr");
+			pstmt = con.prepareStatement(update);
+			pstmt.setString(1, c.getC_name());
+			pstmt.setInt(2, c.getCredit());
+			pstmt.setString(3, c.getL_code());//강사 코드 설정
+			pstmt.setInt(4, c.getDay());//요일 설정
+			pstmt.setInt(5, c.getStart_hour());
+			pstmt.setInt(6, c.getEnd_hour());
+			pstmt.setString(7, c.getId()); // where 과목 코드 설정
+			pstmt.executeUpdate();
+			flag = true; //변경 성공을 의미
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close(); con.close();
+			}catch(Exception e) {}
+		}
+		return flag;
+	}
+	
 	public Courses getCourse(String id) {
 		String select = "select c.id, c.name, l.name, c.credit, c.week, "
 				+ "c.start_hour, c.end_end"
@@ -37,7 +68,9 @@ public class DBExpert {
 				c.setCredit(rs.getInt(4));//학점
 				c.setDay(rs.getInt(5));//요일
 				c.setStart_hour(rs.getInt(6));//시작 시간(숫자)
+				c.setStart(String.format("%04d", c.getStart_hour()));
 				c.setEnd_hour(rs.getInt(7));//종료 시간(숫자)
+				c.setEnd(String.format("%04d", c.getEnd_hour()));
 			}
 		}catch(Exception e) {
 			

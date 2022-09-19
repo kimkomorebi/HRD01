@@ -18,7 +18,7 @@
 	Courses c = (Courses)request.getAttribute("C");
 	ArrayList<String> names = (ArrayList<String>)request.getAttribute("NAMES");
 %>
-			<form action="">
+			<form action="courseUpdateDo.do" method="post" onSubmit="">
 				<table border="1">
 					<tr>
 						<th>교과목 코드</th>
@@ -60,26 +60,104 @@
 					</tr>
 					<tr>
 						<th>요 일</th>
-						<td>라디오 버튼으로 해당 요일을 출력</td>
+						<td>
+							<%
+								if(c.getDay() == 1){
+							%>
+								월<input type="radio" name="WEEK" value="1" checked="checked"/>
+							<%
+								}else {
+							%>
+								월<input type="radio" name="WEEK" value="1"/>
+							<%	
+								}
+							%>
+							<%
+								if(c.getDay() == 2){
+							%>
+								화<input type="radio" name="WEEK" value="2" checked="checked"/>
+							<%
+								}else {
+							%>
+								화<input type="radio" name="WEEK" value="2"/>
+							<%	
+								}
+							%>
+							<%
+								if(c.getDay() == 3){
+							%>
+								수<input type="radio" name="WEEK" value="3" checked="checked"/>
+							<%
+								}else {
+							%>
+								수<input type="radio" name="WEEK" value="3"/>
+							<%	
+								}
+							%>
+							<%
+								if(c.getDay() == 4){
+							%>
+								목<input type="radio" name="WEEK" value="4" checked="checked"/>
+							<%
+								}else {
+							%>
+								목<input type="radio" name="WEEK" value="4"/>
+							<%	
+								}
+							%>
+							<%
+								if(c.getDay() == 5){
+							%>
+								금<input type="radio" name="WEEK" value="5" checked="checked"/>
+							<%
+								}else {
+							%>
+								금<input type="radio" name="WEEK" value="5"/>
+							<%	
+								}
+							%>
+							<%
+								if(c.getDay() == 6){
+							%>
+								토<input type="radio" name="WEEK" value="6" checked="checked"/>
+							<%
+								}else {
+							%>
+								토<input type="radio" name="WEEK" value="6"/>
+							<%	
+								}
+							%>
+						</td>
 					</tr>
 					<tr>
 						<th>시작시간</th>
 						<td>
-							<input type="text" name="START" value="<%= c.getStart_hour() %>"/>
+							<input type="text" name="START" value="<%= c.getStart() %>"/>
 						</td>
 					</tr>
 					<tr>
 						<th>종료시간</th>
 						<td>
-							<input type="text" name="END" value="<%= c.getEnd_hour()%>"/>
+							<input type="text" name="END" value="<%= c.getEnd()%>"/>
 						</td>
 					</tr>
 				</table>
+				<br/>
+				<div align="center">
+					<input type="button" value="목록" onClick="goList()"/>
+					<input type="submit" value="수정"/>
+					<input type="reset" value="취소"/>
+				</div>
 			</form>
 		</div>
 	</section>
 	<footer>
 		<h3 align="center">Copyright 2018 정보처리산업기사 All Right Reserved</h3>
 	</footer>
+	<script type="text/javascript">
+		function goList(){
+			location.href="courseList.do";//과목 목록을 호출하는 서블릿 매핑
+		}
+	</script>
 </body>
 </html>
